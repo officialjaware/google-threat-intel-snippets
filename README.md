@@ -1,0 +1,1 @@
+# google-threat-intel-snippets

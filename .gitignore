@@ -1,0 +1,9 @@
+.DS_Store
+**/.terraform/*
+
+*terraform.*
+*.tfvars
+.terraform/
+
+feeds-downloader/feeds_output/*
+**/venv/*
