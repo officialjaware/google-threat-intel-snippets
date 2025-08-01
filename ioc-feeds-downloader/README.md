@@ -98,5 +98,32 @@ All downloaded files are saved in a directory named ```feeds_output``` in the sa
 
 ## Troubleshooting
 
-### Error 403 Forbidden
-If you encounter ```403 Forbidden``` errors, please verify your license status.
+### HTTP Errors
+
+These errors occur when the API server responds with a status code indicating a problem.
+
+```401 Unauthorized```: This happens if your API key is invalid or has expired. The script will print an error message indicating a ```requests.exceptions.HTTPError```. 
+
+```403 Forbidden```: Most feeds and file downloads require specific licenses. If you try to access a feed or artifact you're not licensed for, the API will return a 403 error. Please verify your license status.
+
+```404 Not Found```: The script is specifically designed to handle this. It will print a message like "No batch found for [feed] at [time]. This is expected for missing batches." This is a normal part of the process, as some minutes may not have new data. However, if you get this error consistently for a long period, it could indicate an issue with your API key or the service itself.
+
+```500 Internal Server Error```: This means there's a problem on the server side. The script will catch the ```requests.exceptions.HTTPError``` and display the error code. The best course of action is to try again later.
+
+### Network and Connection Errors
+
+These are issues related to the connection between your machine and the API server.
+
+```requests.exceptions.ConnectionError```: Your computer failed to connect to the server. This could be due to a lack of internet connection, a firewall blocking the connection, or the server being down.
+
+```requests.exceptions.Timeout```: The request took too long to get a response from the server. This can happen with a slow or unreliable internet connection or if the server is under heavy load.
+
+### Data and File Handling Errors
+
+These errors happen after the data is received, during processing.
+
+```bz2.BZ2Error```: The script will catch this if the downloaded file is not a valid bzip2 compressed file. This could happen if the API returned an HTML error page instead of the expected file, and the script tried to decompress it. The script's error handling for this will print a specific message and remove the corrupted file.
+
+```json.JSONDecodeError```: This error occurs when the script tries to parse a line in the downloaded ```.jsonl``` file as JSON, but the line is improperly formatted. This is rare but could happen if a feed batch is corrupted.
+
+```FileNotFoundError```: This error would occur if, for some reason, the script fails to find the ```.jsonl``` file it just created. The current script's logic minimizes this risk, but it's a possibility if the file is moved or deleted by another process.
