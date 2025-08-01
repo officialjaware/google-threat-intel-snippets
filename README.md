@@ -1,4 +1,4 @@
-# Google Threat Intelligence Snippets
+# Google Threat Intelligence Tools
 
 This project serves as a repository of scripts, examples, and more to help customers interact with Google Threat Intelligence via API.
 
